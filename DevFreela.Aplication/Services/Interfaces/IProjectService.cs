@@ -10,7 +10,6 @@ namespace DevFreela.Aplication.Services.Interfaces
 {
     public interface IProjectService
     {
-        List<ProjectViewModel> GetAll(string query);
         ProjectDetailsViewModel GetByID(int id);
         void Start(int id);
         void Finish(int id);

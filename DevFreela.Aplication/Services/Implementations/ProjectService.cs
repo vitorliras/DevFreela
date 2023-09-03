@@ -38,18 +38,6 @@ namespace DevFreela.Aplication.Services.Implementations
             }
         }
 
-        public List<ProjectViewModel> GetAll(string query)
-        {
-            var projects = _dbContext.Projects;
-            var projectViewModel =  projects
-                    .Select(p => new ProjectViewModel(p.Id, p.Title, p.CreatedAt))
-                    .ToList();
-
-            return projectViewModel;
-
-
-        }
-
         public ProjectDetailsViewModel GetByID(int id)
         {
             var project = _dbContext.Projects.Include(x => x.Client).Include(x => x.Freelancer).SingleOrDefault(p => p.Id == id);
