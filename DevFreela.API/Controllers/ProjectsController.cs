@@ -1,5 +1,8 @@
 ﻿using DevFreela.API.Models;
+using DevFreela.Aplication.Commands.CreateComment;
 using DevFreela.Aplication.Commands.CreateProject;
+using DevFreela.Aplication.Commands.DeleteProject;
+using DevFreela.Aplication.Commands.UpdateProject;
 using DevFreela.Aplication.InputModel;
 using DevFreela.Aplication.Services.Interfaces;
 using MediatR;
@@ -58,31 +61,34 @@ namespace DevFreela.API.Controllers
 
         // api/projects/2
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateProjectInputModel inputModel)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateProjectCommand command)
         {
-            if (inputModel.Description.Length > 50)
+            if (command.Description.Length > 50)
             {
                 return BadRequest();
             }
 
-            _projectService.Update(inputModel);  
+            await _mediator.Send(command);
 
             return NoContent();
         }
 
         // api/projects/3
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        { 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteProjectCommand(id);
+            await _mediator.Send(command);
 
             return NoContent();
         }
 
         // api/projects/1/comments POST
         [HttpPost("{id}/comments")]
-        public IActionResult PostComment(int id, [FromBody] CreatedCommentInputModel inputModel)
+        public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand command)
         {
-            _projectService.CreateComment(inputModel);
+            await _mediator.Send(command);
+
             return NoContent();
         }
 

@@ -12,10 +12,6 @@ namespace DevFreela.Aplication.Services.Interfaces
     {
         List<ProjectViewModel> GetAll(string query);
         ProjectDetailsViewModel GetByID(int id);
-        int Create(NewProjectInputModel inputModel);
-        void Update(UpdateProjectInputModel inputModel);
-        void Delete(int id);
-        void CreateComment(CreatedCommentInputModel inputModel);
         void Start(int id);
         void Finish(int id);
     }
